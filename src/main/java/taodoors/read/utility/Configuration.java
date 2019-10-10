@@ -12,9 +12,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 
 import java.io.File;
-import java.io.File;
 import java.io.IOException;
-import java.util.Map;
 
 /**
  * read configuration files
@@ -58,11 +56,20 @@ public class Configuration {
             fileName = defaultFile;
         }
         String file = folder + '/' + fileName;
+        String current = new java.io.File( "." ).getCanonicalPath();
+        System.out.println("Current dir:"+current);
+        String currentDir = System.getProperty("user.dir");
+        System.out.println("Current dir using System:" +currentDir);
+        File current1 = new java.io.File( ".");
+        for(Object i: current1.list() ){
+            System.out.println(i.toString());
+        }
+   
         File xmlFile = new File(file);
-        Document doc = this.dBuilder.parse(xmlFile);
+       Document doc = this.dBuilder.parse(xmlFile);
 
-        doc.getDocumentElement().normalize();
-        return doc;
+       doc.getDocumentElement().normalize();
+       return doc;
     }
 
 
