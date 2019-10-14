@@ -1,0 +1,3 @@
+vi /etc/sysconfig/iptables ###see ports
+added iptables -I INPUT $i -p tcp -m state --state NEW -m tcp --dport 4242 -j ACCEPT 
+systemctl restart iptables ## restart
