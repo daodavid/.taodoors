@@ -1,0 +1,16 @@
+### ignore common project files ###
+/.project
+*.iml
+.idea/
+*.txt
+*.log
+*.bat
+
+### ignore Package Files ###
+*.jar
+*.war
+*.ear
+*.zip
+
+### ignore all target directories ###
+target/

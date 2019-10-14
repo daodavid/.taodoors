@@ -14,6 +14,8 @@ import org.w3c.dom.Element;
 import java.io.File;
 import java.io.IOException;
 
+import static bg.tao.utility.SystemUtility.*;
+
 /**
  * read configuration files
  * Singleton
@@ -26,8 +28,11 @@ public class Configuration {
     private DocumentBuilderFactory dbFactory;
     private static DocumentBuilder dBuilder = null;
 
+    private static String separator;
+
     private Configuration() throws ParserConfigurationException {
-        dbFactory=DocumentBuilderFactory.newInstance();
+        separator = getSeparator();
+        dbFactory = DocumentBuilderFactory.newInstance();
         dBuilder = dbFactory.newDocumentBuilder();
     }
 
@@ -52,24 +57,24 @@ public class Configuration {
      */
 
     public Document openDocument(String fileName) throws ParserConfigurationException, IOException, SAXException {
+        //String folder =
         if (fileName == null) {
-            fileName = defaultFile;
+            fileName = parentFolder+folder+separator+defaultFile;
         }
-        String file = folder + '/' + fileName;
-        String current = new java.io.File( "." ).getCanonicalPath();
-        System.out.println("Current dir:"+current);
+        String current = new java.io.File(".").getCanonicalPath();
+        System.out.println("Current dir:" + current);
         String currentDir = System.getProperty("user.dir");
-        System.out.println("Current dir using System:" +currentDir);
-        File current1 = new java.io.File( ".");
-        for(Object i: current1.list() ){
+        System.out.println("Current dir using System:" + currentDir);
+        File current1 = new java.io.File(".");
+        for (Object i : current1.list()) {
             System.out.println(i.toString());
         }
-   
-        File xmlFile = new File(file);
-       Document doc = this.dBuilder.parse(xmlFile);
 
-       doc.getDocumentElement().normalize();
-       return doc;
+        File xmlFile = new File(fileName);
+        Document doc = this.dBuilder.parse(xmlFile);
+
+        doc.getDocumentElement().normalize();
+        return doc;
     }
 
 

@@ -1,5 +1,6 @@
 package taodoors.tcp.provider;
 
+import bg.tao.utility.SystemUtility;
 import org.xml.sax.SAXException;
 import taodoors.read.utility.Configuration;
 
@@ -17,6 +18,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Date;
 import java.util.StringTokenizer;
+
+import static bg.tao.utility.SystemUtility.*;
+
 
 /**
  * Server one time
@@ -37,14 +41,15 @@ public class HTTPServer implements Runnable {
         String WEB_CONTENT_TAG = "web_content_folder";
     }
 
+    public interface Tags {
+
+    }
+
 
     public HTTPServer(Socket socket) throws Exception {
         this.serverConnect = new ServerSocket(this.port);
         this.connect = socket;
-        this.webRoot = Configuration.getInstance().getConfigurationByTagName(null,ConfigTag.WEB_CONTENT_TAG);
-
     }
-
 
     public int getPort() {
         return port;
@@ -53,14 +58,14 @@ public class HTTPServer implements Runnable {
     private int port;
 
     // verbose mode
-    static final boolean verbose = true;
+    public static final boolean verbose = true;
+    public static String webRoot = parentFolder + "Web" + separator + "html";
 
     // Client Connection via Socket Class
     private Socket connect;
-    private String webRoot = null;
+
 
     private ServerSocket serverConnect = null;
-
 
 
     public void run() {
@@ -93,7 +98,7 @@ public class HTTPServer implements Runnable {
                 }
 
                 // we return the not supported file to the client
-                File file = new File(this.webRoot,Pages.METHOD_NOT_SUPPORTED);
+                File file = new File(this.webRoot, Pages.METHOD_NOT_SUPPORTED);
                 int fileLength = (int) file.length();
                 String contentMimeType = "text/html";
                 //read content to return to client
@@ -117,7 +122,7 @@ public class HTTPServer implements Runnable {
                     fileRequested += Pages.DEFAULT_FILE;
                 }
 
-                File file = new File(this.webRoot, fileRequested);
+                File file = new File(webRoot, fileRequested);
                 int fileLength = (int) file.length();
                 String content = getContentType(fileRequested);
 
@@ -194,7 +199,7 @@ public class HTTPServer implements Runnable {
     }
 
     private void fileNotFound(PrintWriter out, OutputStream dataOut, String fileRequested) throws IOException {
-        File file = new File(this.webRoot, Pages.FILE_NOT_FOUND);
+        File file = new File(webRoot, Pages.FILE_NOT_FOUND);
         int fileLength = (int) file.length();
         String content = "text/html";
         byte[] fileData = readFileData(file, fileLength);
@@ -221,7 +226,7 @@ public class HTTPServer implements Runnable {
             int port = (p == null) ? DefaultConfiguration.port : Integer.parseInt(p);
 
             Configuration configFile = Configuration.getInstance();
-            String webRoot = configFile.getConfigurationByTagName(null, JavaHTTPServer.TAGS.WEB_CONTENT_TAG);
+            //String webRoot = configFile.getConfigurationByTagName(null, HTTPServer.TAGS.WEB_CONTENT_TAG);
             ServerSocket serverConnect = new ServerSocket(port);
             System.out.println("Server started.\nListening for connections on port : " + port + " ...\n");
 

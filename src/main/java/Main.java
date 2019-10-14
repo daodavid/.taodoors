@@ -1,7 +1,6 @@
 import org.xml.sax.SAXException;
 import taodoors.read.utility.Configuration;
 import taodoors.tcp.provider.HTTPServer;
-import taodoors.tcp.provider.JavaHTTPServer;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
@@ -17,7 +16,7 @@ public class Main {
             int port = (p == null) ? HTTPServer.DefaultConfiguration.port : Integer.parseInt(p);
 
             Configuration configFile = Configuration.getInstance();
-            String webRoot = configFile.getConfigurationByTagName(null, JavaHTTPServer.TAGS.WEB_CONTENT_TAG);
+            //String webRoot = configFile.getConfigurationByTagName(null, JavaHTTPServer.TAGS.WEB_CONTENT_TAG);
             ServerSocket serverConnect = new ServerSocket(port);
             System.out.println("Server started.\nListening for connections on port : " + port + " ...\n");
 

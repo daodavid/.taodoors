@@ -18,7 +18,7 @@
            </includes>
           </resource>
           <resource>
-              <directory>src/main/Web</directory>
+              <directory>resources/Web</directory>
               <includes>
                   <include>**/*.html</include>
                   <include>**/*.xml</include>
