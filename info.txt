@@ -1,0 +1,9 @@
+vi /etc/sysconfig/iptables ###see ports
+added iptables -I INPUT $i -p tcp -m state --state NEW -m tcp --dport 4242 -j ACCEPT 
+systemctl restart iptables ## restart
+
+
+
+#####Jconsole
+sudo netstat -plnt | grep 9999 ###check is the running
+iptables -A INPUT -p tcp -m state --state NEW -m tcp --dport 9999 -j ACCEPT
